@@ -1,69 +1,90 @@
-import Image from "next/image";
+import Link from "next/link";
+import { EstadoBadge } from "@/components/EstadoBadge";
+import { RUTAS_INICIALES, SPOTS_INICIALES } from "@/data/seedData";
 
-export default function Home() {
+export default function HomePage() {
+  const rutasFluidasyModeradas = RUTAS_INICIALES.filter(
+    (r) => r.estado !== "precaucion"
+  ).length;
+  const spotsDestacados = SPOTS_INICIALES.filter((s) => s.destacado);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="mx-auto max-w-6xl space-y-10 px-4 py-8">
+      {/* Encabezado Hero */}
+      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs md:p-8">
+        <p className="text-xs font-semibold tracking-wider text-emerald-700 uppercase">
+          Monitoreo Vial y Destinos Locales
+        </p>
+        <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-900 md:text-4xl">
+          Planifica tus trayectos y paradas en El Salvador
+        </h1>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 md:text-base">
+          Consulta el estado actualizado de corredores clave, filtra cafés y senderos en
+          zonas de altura y comparte reportes en tiempo real con otros conductores.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link
+            href="/rutas"
+            className="rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Explorar rutas
+          </Link>
+          <Link
+            href="/reportes"
+            className="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 hover:bg-slate-100"
           >
-            Documentation
-          </a>
+            Enviar reporte de condición
+          </Link>
         </div>
-      </main>
+      </section>
+
+      {/* Tarjetas de métricas */}
+      <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="rounded-xl border border-slate-200 bg-white p-5">
+          <p className="text-xs font-medium text-slate-500">Rutas monitoreadas</p>
+          <p className="mt-1 text-2xl font-bold text-slate-900">{RUTAS_INICIALES.length}</p>
+        </div>
+        <div className="rounded-xl border border-slate-200 bg-white p-5">
+          <p className="text-xs font-medium text-slate-500">Corredores sin alerta crítica</p>
+          <p className="mt-1 text-2xl font-bold text-emerald-700">{rutasFluidasyModeradas}</p>
+        </div>
+        <div className="rounded-xl border border-slate-200 bg-white p-5">
+          <p className="text-xs font-medium text-slate-500">Spots recomendados</p>
+          <p className="mt-1 text-2xl font-bold text-slate-900">{spotsDestacados.length}</p>
+        </div>
+      </section>
+
+      {/* Vista rápida de rutas */}
+      <section className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-slate-900">Estado rápido de rutas</h2>
+          <Link href="/rutas" className="text-sm font-medium text-emerald-700 hover:underline">
+            Ver todas →
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {RUTAS_INICIALES.map((ruta) => (
+            <article
+              key={ruta.id}
+              className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-5"
+            >
+              <div>
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="font-semibold text-slate-900">{ruta.nombre}</h3>
+                  <EstadoBadge estado={ruta.estado} />
+                </div>
+                <p className="mt-2 text-sm text-slate-600">{ruta.resumen}</p>
+              </div>
+              <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-xs text-slate-500">
+                <span>
+                  {ruta.distanciaKm} km · ~{ruta.tiempoEstimadoMin} min
+                </span>
+                <span>{ruta.actualizadoHace}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

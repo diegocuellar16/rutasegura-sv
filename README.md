@@ -1,36 +1,19 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RutaSegura SV
 
-## Getting Started
+Aplicación web desarrollada con **Next.js 16+ (App Router)**, **TypeScript** y **Tailwind CSS** mediante el flujo de **Vibe Coding** para consultar rutas, explorar cafés y senderos de altura y registrar reportes de condición.
 
-First, run the development server:
+## Funcionalidades principales
+
+- **4 rutas en App Router**:
+  - `/` (`src/app/page.tsx`): Panel principal con métricas y estado rápido de rutas (Server Component).
+  - `/rutas` (`src/app/rutas/page.tsx` + `src/components/RutasClient.tsx`): Búsqueda y filtrado por condición y distancia con `useState` y `useEffect`.
+  - `/spots` (`src/app/spots/page.tsx` + `src/components/SpotsClient.tsx`): Directorio de cafés, miradores y senderos con filtro por tipo, opción *pet-friendly* y favoritos persistidos en `localStorage`.
+  - `/reportes` (`src/app/reportes/page.tsx` + `src/components/ReportesClient.tsx`): Consumo en vivo del Route Handler `/api/reportes` (`GET` y `POST`) con estados de carga, validación y manejo de errores.
+- **Estados de carga y error**: `src/app/loading.tsx` y `src/app/error.tsx`, además de estados locales en vistas interactivas.
+
+## Variables de entorno
+
+Copia `.env.example` a `.env.local` para desarrollo local:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+cp .env.example .env.local
